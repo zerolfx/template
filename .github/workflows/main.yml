@@ -15,9 +15,8 @@ jobs:
         architecture: 'x64' # (x64 or x86)
     - name: Install Pandoc
       run: |
-        python -m pip --version
-        python -m pip install setuptools wheel
-        python -m pip install pandocfilters
+        python -m pip --no-cache-dir install setuptools wheel
+        python -m pip --no-cache-dir install pandocfilters
         sudo apt install -y texlive texlive-xetex latexmk wget
         wget "https://github.com/jgm/pandoc/releases/download/2.7.3/pandoc-2.7.3-1-amd64.deb"
         sudo dpkg -i pandoc-2.7.3-1-amd64.deb
