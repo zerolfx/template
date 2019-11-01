@@ -44,3 +44,9 @@ jobs:
         mkdir -p ~/.pandoc/templates
         cp pandoc/algo.latex ~/.pandoc/templates/
         sh pandoc/gen.sh
+        cp template.pdf /tmp
+        git checkout -f gh-pages
+        cp /tmp/template.pdf .
+        git add template.pdf
+        git commit -m "Auto-generated PDF commit"
+        git push
