@@ -9,7 +9,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Run Pandoc
+    - name: Install Pandoc
       run: |
         sudo apt install -y texlive latexmk wget
         wget "https://github.com/jgm/pandoc/releases/download/2.7.3/pandoc-2.7.3-1-amd64.deb"
