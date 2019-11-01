@@ -11,26 +11,28 @@ jobs:
     - uses: actions/checkout@v1
     - uses: actions/setup-python@v1
       with:
-        python-version: '3.x' # Version range or exact version of a Python version to use, using semver version range syntax.	        python-version: '3.x' # Version range or exact version of a Python version to use, using semver version range syntax.
+        python-version: '3.x' # Version range or exact version of a Python version to use, using semver version range syntax.
         architecture: 'x64' # (x64 or x86)
     - name: Install Pandoc
       run: |
+        mkdir -p /tmp/pandoc
+        cd /tmp/pandoc
         python -m pip --no-cache-dir install setuptools wheel
         python -m pip --no-cache-dir install pandocfilters
         sudo apt install -y texlive texlive-xetex latexmk wget
         wget -q "https://github.com/jgm/pandoc/releases/download/2.7.3/pandoc-2.7.3-1-amd64.deb"
         sudo dpkg -i pandoc-2.7.3-1-amd64.deb
-        mkdir -p ~/.pandoc/templates
-        cp pandoc/algo.latex ~/.pandoc/templates/
+        rm -rf *.deb
     - name: Install Fonts
       run: |
-        mkdir -p /tmp/adodefont
-        cd /tmp/adodefont
-        wget -q --show-progress -O source-code-pro.zip https://github.com/adobe-fonts/source-code-pro/archive/2.030R-ro/1.050R-it.zip
-        unzip -q source-code-pro.zip -d source-code-pro
         mkdir -p ~/.fonts
-        cp -v source-code-pro/*/OTF/*.otf ~/.fonts/
+        cd ~/.fonts
+        git clone --depth 1 https://github.com/adobe-fonts/source-code-pro
+        git clone --depth 1 https://github.com/adobe-fonts/source-han-serif
+        git clone --depth 1 https://github.com/adobe-fonts/source-han-sans
         fc-cache -f
-        rm -rf source-code-pro{,.zip}
     - name: Generate PDF
-      run: sh pandoc/gen.sh
+      run: |
+        mkdir -p ~/.pandoc/templates
+        cp pandoc/algo.latex ~/.pandoc/templates/
+        sh pandoc/gen.sh
