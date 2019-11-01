@@ -18,9 +18,19 @@ jobs:
         python -m pip --no-cache-dir install setuptools wheel
         python -m pip --no-cache-dir install pandocfilters
         sudo apt install -y texlive texlive-xetex latexmk wget
-        wget "https://github.com/jgm/pandoc/releases/download/2.7.3/pandoc-2.7.3-1-amd64.deb"
+        wget -q "https://github.com/jgm/pandoc/releases/download/2.7.3/pandoc-2.7.3-1-amd64.deb"
         sudo dpkg -i pandoc-2.7.3-1-amd64.deb
         mkdir -p ~/.pandoc/templates
         cp pandoc/algo.latex ~/.pandoc/templates/
+    - name: Install Fonts
+      run: |
+        mkdir -p /tmp/adodefont
+        cd /tmp/adodefont
+        wget -q --show-progress -O source-code-pro.zip https://github.com/adobe-fonts/source-code-pro/archive/2.030R-ro/1.050R-it.zip
+        unzip -q source-code-pro.zip -d source-code-pro
+        mkdir -p ~/.fonts
+        cp -v source-code-pro/*/OTF/*.otf ~/.fonts/
+        fc-cache -f
+        rm -rf source-code-pro{,.zip}
     - name: Generate PDF
       run: sh pandoc/gen.sh
