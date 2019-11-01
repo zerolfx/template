@@ -1,4 +1,4 @@
-name: CI
+name: CD
 
 on: [push]
 
@@ -44,9 +44,11 @@ jobs:
         mkdir -p ~/.pandoc/templates
         cp pandoc/algo.latex ~/.pandoc/templates/
         sh pandoc/gen.sh
-        cp template.pdf /tmp
-        git checkout -f gh-pages
-        cp /tmp/template.pdf .
+    - name: Deploy
+      run: |
+        git clone -b gh-pages https://oauth2:${{secrets.ACCESS_TOKEN}}@github.com/F0RE1GNERS/template /tmp/template
+        cp template.pdf /tmp/template/
+        cd /tmp/template
         git add template.pdf
         git config --global user.email "bot@foreigners.io"
         git config --global user.name "F0RE1GNERS BOT"
