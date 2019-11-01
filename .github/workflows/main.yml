@@ -20,5 +20,6 @@ jobs:
         sudo dpkg -i pandoc-2.7.3-1-amd64.deb
         mkdir -p ~/.pandoc/templates
         cp pandoc/algo.latex ~/.pandoc/templates/
+        sudo pip3 install pandocfilters
     - name: Generate PDF
       run: sh pandoc/gen.sh
