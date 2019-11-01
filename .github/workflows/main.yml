@@ -9,9 +9,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Run a one-line script
-      run: echo Hello, world!
-    - name: Run a multi-line script
+    - name: Run Pandoc
       run: |
-        echo Add other actions to build,
-        echo test, and deploy your project.
+        apt install -y pandoc texlive
+        mkdir -p ~/.pandoc/templates
+        cp pandoc/algo.latex ~/.pandoc/templates/
+        sh pandoc/gen.sh
