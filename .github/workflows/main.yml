@@ -18,7 +18,7 @@ jobs:
         python -m pip --version
         python -m pip install setuptools wheel
         python -m pip install pandocfilters
-        sudo apt install -y texlive latexmk wget
+        sudo apt install -y texlive texlive-xetex latexmk wget
         wget "https://github.com/jgm/pandoc/releases/download/2.7.3/pandoc-2.7.3-1-amd64.deb"
         sudo dpkg -i pandoc-2.7.3-1-amd64.deb
         mkdir -p ~/.pandoc/templates
