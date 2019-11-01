@@ -48,5 +48,7 @@ jobs:
         git checkout -f gh-pages
         cp /tmp/template.pdf .
         git add template.pdf
+        git config --global user.email "bot@foreigners.io"
+        git config --global user.name "F0RE1GNERS BOT"
         git commit -m "Auto-generated PDF commit"
         git push
