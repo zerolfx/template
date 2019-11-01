@@ -25,12 +25,18 @@ jobs:
         rm -rf *.deb
     - name: Install Fonts
       run: |
+        mkdir -p /tmp/adodefont
+        cd /tmp/adodefont
+        wget -q --show-progress -O source-code-pro.zip https://github.com/adobe-fonts/source-code-pro/archive/2.030R-ro/1.050R-it.zip
+        wget -q --show-progress -O source-han-serif.zip https://github.com/adobe-fonts/source-han-serif/archive/1.001R.zip
+        wget -q --show-progress -O source-han-sans.zip https://github.com/adobe-fonts/source-han-sans/archive/2.001R.zip
+        unzip -q source-code-pro.zip -d source-code-pro
+        unzip -q source-han-serif.zip -d source-han-serif
+        unzip -q source-han-sans.zip -d source-han-sans
         mkdir -p ~/.fonts
-        cd ~/.fonts
-        git clone --depth 1 https://github.com/adobe-fonts/source-code-pro
-        git clone --depth 1 https://github.com/adobe-fonts/source-han-serif
-        git clone --depth 1 https://github.com/adobe-fonts/source-han-sans
+        cp -v source-code-pro/*/OTF/*.otf source-han-serif/*/OTF/*.otf source-han-sans/*/OTF/*.otf ~/.fonts/
         fc-cache -f
+        rm -rf source-code-pro{,.zip} source-han-serif{,.zip} source-han-sans{,.zip}
     - name: Generate PDF
       run: |
         mkdir -p ~/.pandoc/templates
