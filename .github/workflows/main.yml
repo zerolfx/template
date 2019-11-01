@@ -9,14 +9,18 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+    - uses: actions/setup-python@v1
+      with:
+        python-version: '3.x' # Version range or exact version of a Python version to use, using semver version range syntax.	        python-version: '3.x' # Version range or exact version of a Python version to use, using semver version range syntax.
+        architecture: 'x64' # (x64 or x86)
     - name: Install Pandoc
       run: |
-        sudo apt install -y texlive latexmk wget python3-setuptools python3
+        sudo pip install setuptools wheel
+        sudo pip install pandocfilters
+        sudo apt install -y texlive latexmk wget
         wget "https://github.com/jgm/pandoc/releases/download/2.7.3/pandoc-2.7.3-1-amd64.deb"
         sudo dpkg -i pandoc-2.7.3-1-amd64.deb
         mkdir -p ~/.pandoc/templates
         cp pandoc/algo.latex ~/.pandoc/templates/
-        pip3 --version
-        pip3 install pandocfilters
     - name: Generate PDF
       run: sh pandoc/gen.sh
