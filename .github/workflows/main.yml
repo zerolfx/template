@@ -35,8 +35,8 @@ jobs:
         unzip -q source-han-sans.zip -d source-han-sans
         mkdir -p ~/.fonts
         cp -v source-code-pro/*/OTF/*.otf ~/.fonts/
-        cp -v source-han-serif/*/OTF/*/*.otf ~/.fonts/
-        cp -v source-han-sans/*/OTF/*/*.otf ~/.fonts/
+        cp -v source-han-serif/*/SubsetOTF/*/*.otf ~/.fonts/
+        cp -v source-han-sans/*/SubsetOTF/*/*.otf ~/.fonts/
         fc-cache -f
         rm -rf source-code-pro{,.zip} source-han-serif{,.zip} source-han-sans{,.zip}
     - name: Generate PDF
